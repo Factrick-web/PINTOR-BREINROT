@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pintorsito Breinrot - Tienda Oficial</title>
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: radial-gradient(circle at top, #0a0a0a, #000);
+      color: white;
+      margin: 0;
+      padding: 0;
+      text-align: center;
+    }
+
+    header {
+      background: linear-gradient(90deg, #ff00a6, #ff007b, #ff00a6);
+      padding: 30px 10px 10px;
+      font-size: 26px;
+      font-weight: 700;
+      color: #fff;
+      box-shadow: 0 0 20px #ff00a6;
+      position: relative;
+      overflow: hidden;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 26px;
+      white-space: normal;
+      word-wrap: break-word;
+    }
+
+    .rgb-text {
+      font-size: 16px;
+      font-weight: 500;
+      background: linear-gradient(90deg, red, orange, yellow, lime, cyan, blue, violet, red);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-size: 400%;
+      animation: rgbMove 5s linear infinite;
+      margin-top: 5px;
+    }
+
+    @keyframes rgbMove {
+      0% { background-position: 0% 50%; }
+      100% { background-position: 100% 50%; }
+    }
+
+    .container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+      margin: 40px auto;
+      max-width: 900px;
+    }
+
+    .card {
+      background: #111;
+      border-radius: 15px;
+      box-shadow: 0 0 15px rgba(0, 153, 255, 0.3);
+      width: 250px;
+      padding: 20px;
+      transition: transform 0.2s ease, box-shadow 0.3s ease;
+    }
+
+    .card:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 30px rgba(0, 153, 255, 0.6);
+    }
+
+    .card img {
+      width: 100%;
+      border-radius: 10px;
+      height: 150px;
+      object-fit: cover;
+      margin-bottom: 10px;
+    }
+
+    .card h2 {
+      color: #00a2ff;
+      margin: 10px 0 5px;
+    }
+
+    .card p {
+      margin: 5px 0;
+    }
+
+    .btn {
+      background: #007bff;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .btn:hover {
+      background: #005fcc;
+    }
+
+    /* Modal */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.8);
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+    }
+
+    .modal-content {
+      background: #111;
+      padding: 25px;
+      border-radius: 15px;
+      box-shadow: 0 0 20px rgba(0, 153, 255, 0.6);
+      width: 90%;
+      max-width: 400px;
+      text-align: center;
+    }
+
+    .close {
+      float: right;
+      cursor: pointer;
+      color: #888;
+      font-size: 20px;
+    }
+
+    .close:hover {
+      color: white;
+    }
+
+    .payment-section {
+      margin-top: 15px;
+      text-align: left;
+    }
+
+    .message {
+      margin-top: 15px;
+      background: #0d0d0d;
+      padding: 15px;
+      border-radius: 10px;
+      border: 1px solid #00a2ff;
+      color: #ccc;
+      font-size: 14px;
+    }
+
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Pintorsito Breinrot - Tienda Oficial</h1>
+    <div class="rgb-text">Factrick Cheat</div>
+  </header>
+
+  <div class="container">
+    <div class="card">
+      <img src="base de oro.jpg" alt="Base de oro">
+      <h2>Base Dorada</h2>
+      <p>$8 USD</p>
+      <button class="btn" onclick="openModal('Base Dorada', 8)">Comprar</button>
+    </div>
+
+    <div class="card">
+      <img src="base de diamante.jpg" alt="Base de diamante">
+      <h2>Base Diamante</h2>
+      <p>$13 USD</p>
+      <button class="btn" onclick="openModal('Base Diamante', 13)">Comprar</button>
+    </div>
+
+    <div class="card">
+      <img src="base YinYang.jpg" alt="Base YinYang">
+      <h2>Base YinYang</h2>
+      <p>$20 USD</p>
+      <button class="btn" onclick="openModal('Base YinYang', 20)">Comprar</button>
+    </div>
+
+    <div class="card">
+      <img src="base raimbow.jpg" alt="Base Raimbow">
+      <h2>Base Raimbow</h2>
+      <p>$18 USD</p>
+      <button class="btn" onclick="openModal('Base Raimbow', 18)">Comprar</button>
+    </div>
+  </div>
+
+  <div class="modal" id="paymentModal">
+    <div class="modal-content">
+      <span class="close" onclick="closeModal()">&times;</span>
+      <h2 id="productTitle"></h2>
+      <p id="productPrice"></p>
+
+      <div class="payment-section">
+        <h3>Método de pago</h3>
+        <label><input type="radio" name="payment" value="nequi"> Nequi</label><br>
+        <label><input type="radio" name="payment" value="breinrot"> Breinrot</label>
+      </div>
+
+      <button class="btn" onclick="continuePayment()">Continuar</button>
+      <div id="paymentMessage" class="message"></div>
+    </div>
+  </div>
+
+  <script>
+    let currentProduct = '';
+
+    function openModal(product, price) {
+      currentProduct = { product, price };
+      document.getElementById("productTitle").innerText = "Comprar " + product;
+      document.getElementById("productPrice").innerText = "Precio: $" + price + " USD";
+      document.getElementById("paymentModal").style.display = "flex";
+      document.getElementById("paymentMessage").innerHTML = "";
+    }
+
+    function closeModal() {
+      document.getElementById("paymentModal").style.display = "none";
+    }
+
+    function continuePayment() {
+      const selected = document.querySelector('input[name="payment"]:checked');
+      const messageBox = document.getElementById("paymentMessage");
+
+      if (!selected) {
+        messageBox.innerHTML = "<p style='color:red;'>Selecciona un método de pago.</p>";
+        return;
+      }
+
+      if (selected.value === "nequi") {
+        messageBox.innerHTML = `
+          <p>✅ Listo, envía el dinero a este número de Nequi: <b>3180023199</b></p>
+          <a href="https://wa.me/573180023199?text=Hola,+ya+envié+el+dinero+por+Nequi+para+comprar+${currentProduct.product}" target="_blank">
+            <button class="btn" style="margin-top:10px;">Enviar comprobante</button>
+          </a>`;
+      } else if (selected.value === "breinrot") {
+        messageBox.innerHTML = `
+          <p>👋 Hola, si vas a pagar con Breinrot solo se reciben mínimo 4 o puedes pagar con uno que dé 400M.<br>
+          Si cumples con esto, toca el botón de abajo para contactar por WhatsApp. 
+          Di que vas a pintar la base de <b>${currentProduct.product}</b> y los Breinrot que vas a dar. 
+          El admin te enviará el usuario del servidor para pagar y pintar tu base 😁</p>
+          <a href="https://wa.me/573180023199?text=Hola,+quiero+pagar+con+Breinrot+para+la+base+${currentProduct.product}" target="_blank">
+            <button class="btn" style="margin-top:10px;">Contactar por WhatsApp</button>
+          </a>`;
+      }
+    }
+  </script>
+
+</body>
+</html>
